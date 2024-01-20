@@ -16,6 +16,7 @@ export interface Props {
 
     getMessagesList: Function
     sendMessage: Function
+    setUsername: Function
 }
 
 const mapStateToProps = (state: AppState) => ({
@@ -26,6 +27,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     getMessagesList: () => dispatch(mainActions.mainMessagesListFetch()),
     sendMessage: (messageText: string) => dispatch(mainActions.mainSendMessage(messageText)),
+    setUsername: (newUsername: string) => dispatch(mainActions.setMainUsername(newUsername)),
 });
 
 const Home = (props: Props) => {
@@ -34,6 +36,7 @@ const Home = (props: Props) => {
         messages,
         getMessagesList,
         sendMessage,
+        setUsername
     } = props;
     
     const [messageText, setMessageText] = React.useState('');
@@ -94,6 +97,7 @@ const Home = (props: Props) => {
                         className={styles.usernameValue}
                         size={10}
                         onChange={(event) => {
+                            setUsername(event.target.value);
                         }}
                     />
                 </div>

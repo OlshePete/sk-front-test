@@ -6,6 +6,7 @@ import {
 
     MAIN_SEND_MESSAGE,
     TAction,
+    SET_MAIN_USERNAME,
 } from '../actions/mainActions';
 import { MessagesList } from '../types';
 
@@ -39,7 +40,6 @@ const main = (state = initialState, action: TAction) => {
             newState.messengerError = action.error;
             return newState;
         }
-            
         case MAIN_SEND_MESSAGE: {
             const newState = Object.assign({}, state);
             const messageList = [
@@ -51,6 +51,11 @@ const main = (state = initialState, action: TAction) => {
                 }
             ]
             newState.messagesList = messageList;
+            return newState;
+        }
+        case SET_MAIN_USERNAME: {
+            const newState = Object.assign({}, state);
+            newState.username = action.newUsername
             return newState;
         }
         default: {
