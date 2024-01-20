@@ -35,15 +35,23 @@ const Home = (props: Props) => {
         getMessagesList,
         sendMessage,
     } = props;
-    const [messageText, setmessageText] = React.useState('');
-
+    
+    const [messageText, setMessageText] = React.useState('');
+    const listRef = React.useRef<HTMLUListElement>(null)
     React.useEffect(() => {
         getMessagesList();
     }, []);
+    React.useEffect(() => {
+        if( listRef.current && messages?.length>1) {
+            const children = listRef.current.children 
+            const last = children && children?.[children.length-1] as HTMLLIElement
+            last?.scrollIntoView({ block: "end", behavior: "smooth",  })
+        }
+    }, [messages, listRef.current]);
     
     return (
         <div className={styles.root}>
-            <ul className={styles.messagesList}>
+            <ul className={styles.messagesList} ref={listRef}>
                 {
                     messages === null
                         ? <li className={styles.noMessage}>Загрузка...</li>
@@ -56,8 +64,8 @@ const Home = (props: Props) => {
                 }
                 {
                     messages !== null && messages.length
-                        ? messages.map(message =>
-                            <li className={styles.messageItem}>
+                        ? messages.map((message,index) =>
+                            <li className={styles.messageItem} key={message.text + index}>
                                 <div className={styles.messageText}>
                                     <div className={styles.messageSender}>
                                         {message.sender}
@@ -85,13 +93,15 @@ const Home = (props: Props) => {
                         value={username}
                         className={styles.usernameValue}
                         size={10}
+                        onChange={(event) => {
+                        }}
                     />
                 </div>
                 <input
                     className={styles.messageInput}
                     value={messageText}
                     onChange={(event) => {
-                        setmessageText(event.target.value);
+                        setMessageText(event.target.value);
                     }}
                     placeholder="Введите сообщение"
                     autoFocus
@@ -101,7 +111,7 @@ const Home = (props: Props) => {
                         event.preventDefault();
                         if (messageText) {
                             sendMessage(messageText);
-                            setmessageText('');
+                            setMessageText('');
                         }
                     }}
                     className={styles.messageSendButton}
