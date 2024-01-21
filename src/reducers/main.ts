@@ -1,4 +1,3 @@
-import moment from 'moment';
 import {
     MAIN_MESSAGES_LIST_FETCH,
     MAIN_MESSAGES_LIST_SUCCESS,
@@ -7,6 +6,7 @@ import {
     MAIN_SEND_MESSAGE,
     TAction,
     SET_MAIN_USERNAME,
+    MAIN_MESSAGES_ADD_NEW,
 } from '../actions/mainActions';
 import { MessagesList } from '../types';
 
@@ -41,15 +41,11 @@ const main = (state = initialState, action: TAction) => {
             return newState;
         }
         case MAIN_SEND_MESSAGE: {
+            return state;
+        }
+        case MAIN_MESSAGES_ADD_NEW: {
             const newState = Object.assign({}, state);
-            const messageList = [
-                ...newState.messagesList ? newState.messagesList : [],
-                {
-                    time: moment().format('HH:MM'),
-                    text: action.messageText,
-                    sender: newState.username,
-                }
-            ]
+            const messageList = [...newState.messagesList ? newState.messagesList : [], action.newMessage]
             newState.messagesList = messageList;
             return newState;
         }

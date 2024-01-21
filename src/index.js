@@ -7,12 +7,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers';
 import rootSaga from './sagas';
 import Messenger from './components/Messenger';
+import setupSocket from './websocket-client';
 import './index.css';
 
 try {
   const sagaMiddleware = createSagaMiddleware();
   const store = createStore(reducers, composeWithDevTools(applyMiddleware(sagaMiddleware)));
-  sagaMiddleware.run(rootSaga);
+  const socket = setupSocket(store.dispatch)
+  sagaMiddleware.run(rootSaga, {socket});
   ReactDOM.render(
     <Provider store={store}>
       <Messenger />
