@@ -1,5 +1,6 @@
-/node_modules
+node_modules
 yarn.lock
 *.log
 .history
 package-lock.json
+server/chatbase.db
