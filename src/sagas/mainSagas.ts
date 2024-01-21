@@ -1,17 +1,12 @@
-import { all, takeEvery } from 'typed-redux-saga';
+import { all, takeEvery, put, delay, call } from 'typed-redux-saga';
 import { mainActions } from '../actions';
 import { MainApi } from '../api'
 import { select } from 'redux-saga/effects';
 
 export function* addMessage(action: any, socket: WebSocket): Generator<any, void, any> {
     try {
-        // Проверяем, что сокет открыт
-        if (socket.readyState === WebSocket.OPEN) {
-            const username = yield select((state) => state.main.username)
-            yield MainApi.sendMessage(socket, username, action.messageText);
-        } else {
-            console.log('Соединение с сокетом не установлено или закрыто.');
-        }
+        const username = yield select((state) => state.main.username)
+        yield MainApi.sendMessage(socket, username, action.messageText);
 
     } catch (error) {
         console.log('Ошибка при отправке сообщения на сокет:', error);

@@ -1,4 +1,5 @@
 class MainApi {
+    static socketUrl = 'ws://localhost:9000';
     static async sendMessage(socket: WebSocket, sender: string, messageText: string): Promise<void> {
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(
