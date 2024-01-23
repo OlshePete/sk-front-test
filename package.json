@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "install-deps": "npm install && cd ./server && npm install && cd ..",
     "start": "concurrently --kill-others \"node server/server.js\" \"webpack-dev-server --open\"",
     "build": "webpack"
   },
