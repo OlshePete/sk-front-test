@@ -42,6 +42,6 @@ git clone https://github.com/OlshePete/sk-front-test.git
 
 ```bash
   npm run start
-  > _ сервер будет доступен по адресу http://localhost:9000/ _
-  > _ клиентское приложеное будет доступено по адресу http://localhost:3000/ _
 ```
+
+> _ сервер будет доступен по адресу http://localhost:9000/ _ > _ клиентское приложеное будет доступено по адресу http://localhost:3000/ _
